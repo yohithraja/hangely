@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Hangly ships unsandboxed. A sandboxed build cannot register itself as a
+	     login item from an arbitrary location, and Phase 2 needs access the sandbox
+	     does not grant. Enable the sandbox before any Mac App Store submission. -->
+	<key>com.apple.security.app-sandbox</key>
+	<false/>
+</dict>
+</plist>
