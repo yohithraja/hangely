@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "categories": [
+    { "id": "protection", "name": "Protection" },
+    { "id": "luck", "name": "Luck & Fortune" },
+    { "id": "ritual", "name": "Ritual & Home" },
+    { "id": "classic", "name": "Classic" }
+  ],
+  "charms": [
+    {
+      "id": "nazar",
+      "name": "Nazar boncuğu",
+      "region": "Turkey and the Mediterranean",
+      "category": "protection",
+      "description": "A glass eye bead hung to deflect the evil eye, the envious glance believed to bring misfortune. Found across Turkey, Greece and the wider Mediterranean, on doorways, cradles and dashboards alike.",
+      "tags": ["evil eye", "glass", "blue", "amulet", "Turkey", "Greece"],
+      "previewImage": "charm-preview-nazar"
+    },
+    {
+      "id": "hamsa",
+      "name": "Hamsa",
+      "region": "Middle East and North Africa",
+      "category": "protection",
+      "description": "An open right hand, often with an eye in the palm, carried as protection against harm. Shared by Jewish, Muslim and Christian communities from Morocco to the Levant.",
+      "tags": ["hand", "eye", "amulet", "Fatima", "Miriam"],
+      "previewImage": "charm-preview-hamsa"
+    },
+    {
+      "id": "nimbuMirchi",
+      "name": "Nimbu-mirchi",
+      "region": "India",
+      "category": "protection",
+      "description": "A lemon and green chillies strung together and hung at shop doors and on vehicles across India to ward off the evil eye, and to give bad luck something sour to chew on instead.",
+      "tags": ["lemon", "chilli", "evil eye", "doorway", "totka"],
+      "previewImage": "charm-preview-nimbuMirchi"
+    },
+    {
+      "id": "ghanta",
+      "name": "Ghanta",
+      "region": "India",
+      "category": "ritual",
+      "description": "The temple bell of Hindu and Buddhist worship. Its ring is said to clear the mind of the person who strikes it and to announce their arrival to the divine.",
+      "tags": ["bell", "temple", "copper", "puja", "sound"],
+      "previewImage": "charm-preview-ghanta"
+    },
+    {
+      "id": "drishtiBommai",
+      "name": "Drishti bommai",
+      "region": "South India",
+      "category": "protection",
+      "description": "A fierce painted face hung outside homes and building sites in Tamil Nadu. Its job is to draw the evil eye onto itself and away from whatever it guards.",
+      "tags": ["mask", "demon", "evil eye", "Tamil Nadu", "guardian"],
+      "previewImage": "charm-preview-drishtiBommai"
+    },
+    {
+      "id": "panchangJie",
+      "name": "Pánchángjié",
+      "region": "China",
+      "category": "luck",
+      "description": "The endless knot, tied from a single red cord with no beginning and no end. A symbol of longevity, unity and good fortune, hung at Lunar New Year.",
+      "tags": ["knot", "red", "tassel", "New Year", "longevity", "Chinese knot"],
+      "previewImage": "charm-preview-panchangJie"
+    },
+    {
+      "id": "daruma",
+      "name": "Daruma",
+      "region": "Japan",
+      "category": "luck",
+      "description": "A round, weighted doll modelled on the monk Bodhidharma. You paint one eye while making a wish and the other when it comes true, and it always rights itself when knocked over.",
+      "tags": ["doll", "wish", "perseverance", "red", "Bodhidharma"],
+      "previewImage": "charm-preview-daruma"
+    },
+    {
+      "id": "manekiNeko",
+      "name": "Maneki-neko",
+      "region": "Japan",
+      "category": "luck",
+      "description": "The beckoning cat, raised paw inviting good fortune through the door. A raised right paw is said to bring money; a raised left paw brings customers.",
+      "tags": ["cat", "beckoning", "calico", "shop", "fortune"],
+      "previewImage": "charm-preview-manekiNeko"
+    },
+    {
+      "id": "horseshoe",
+      "name": "Horseshoe",
+      "region": "Europe and the Americas",
+      "category": "luck",
+      "description": "Iron shaped by fire, nailed above a door for luck. Hung open end up it holds the luck in; open end down it pours the luck over those who pass beneath.",
+      "tags": ["iron", "door", "luck", "seven nails", "blacksmith"],
+      "previewImage": "charm-preview-horseshoe"
+    },
+    {
+      "id": "scarab",
+      "name": "Scarab",
+      "region": "Ancient Egypt",
+      "category": "protection",
+      "description": "The dung beetle, sacred to the sun's rebirth each morning as it rolls its ball across the sky. Worn as an amulet in ancient Egypt for protection and renewal.",
+      "tags": ["beetle", "Egypt", "turquoise", "rebirth", "amulet", "sun"],
+      "previewImage": "charm-preview-scarab"
+    },
+    {
+      "id": "himmeli",
+      "name": "Himmeli",
+      "region": "Finland",
+      "category": "ritual",
+      "description": "A geometric mobile of rye straw hung above the table at midwinter in Finland to bless the coming harvest. The name comes from the Swedish word for sky.",
+      "tags": ["straw", "geometric", "mobile", "midwinter", "harvest", "gold"],
+      "previewImage": "charm-preview-himmeli"
+    },
+    {
+      "id": "circle",
+      "name": "Bead",
+      "region": "Universal",
+      "category": "classic",
+      "description": "A plain glass bead, the charm Hangly ships with. Simple, weighty and never out of place.",
+      "tags": ["bead", "simple", "default", "violet"],
+      "previewImage": "charm-preview-circle"
+    },
+    {
+      "id": "star",
+      "name": "Star",
+      "region": "Universal",
+      "category": "classic",
+      "description": "Everyone's first lucky charm. The lightest in the set, so it swings the fastest.",
+      "tags": ["star", "gold", "light", "wish"],
+      "previewImage": "charm-preview-star"
+    },
+    {
+      "id": "heart",
+      "name": "Heart",
+      "region": "Universal",
+      "category": "classic",
+      "description": "Worn on the sleeve, or in this case at the top of the screen.",
+      "tags": ["heart", "red", "love"],
+      "previewImage": "charm-preview-heart"
+    },
+    {
+      "id": "diamond",
+      "name": "Diamond",
+      "region": "Universal",
+      "category": "classic",
+      "description": "Cut, faceted and indestructible. Heavy enough to hang the rope nearly straight.",
+      "tags": ["gem", "ice", "faceted", "blue"],
+      "previewImage": "charm-preview-diamond"
+    },
+    {
+      "id": "camera",
+      "name": "Camera",
+      "region": "Universal",
+      "category": "classic",
+      "description": "For photographers and the perpetually nostalgic. The heaviest charm in the box.",
+      "tags": ["camera", "photo", "graphite", "heavy"],
+      "previewImage": "charm-preview-camera"
+    }
+  ]
+}
