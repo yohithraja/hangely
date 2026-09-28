@@ -1,0 +1,183 @@
+# XcodeGen spec for Hangly.
+#
+# Hangly.xcodeproj is committed, so this file is optional — you only need XcodeGen
+# if you want to regenerate the project (for example after adding a folder):
+#
+#     brew install xcodegen && xcodegen generate
+#
+# Keeping the spec in the repo makes build settings reviewable in a diff instead of
+# buried in project.pbxproj.
+
+name: Hangly
+
+options:
+  bundleIdPrefix: com.hangly
+  createIntermediateGroups: true
+  deploymentTarget:
+    macOS: "14.0"
+  groupSortPosition: top
+  generateEmptyDirectories: true
+  minimumXcodeGenVersion: "2.38.0"
+
+# Three configurations, two of which build optimised code:
+#
+# - Debug       development; assertions, testability, previews, diagnostics.
+# - Release     an optimised build that still carries the development overlay and
+#               diagnostic logging, for profiling and for testing what ships.
+# - Production  what is distributed. Everything in Release, plus the development
+#               surfaces compiled out, the binary stripped and a dSYM kept aside.
+configs:
+  Debug: debug
+  Release: release
+  Production: release
+
+fileGroups:
+  - README.md
+  - CONTRIBUTING.md
+  - CHANGELOG.md
+  - SECURITY.md
+  - LICENSE
+  - Docs
+  - Scripts
+  - .swiftlint.yml
+  - project.yml
+
+settings:
+  base:
+    ALWAYS_SEARCH_USER_PATHS: NO
+    # Apple Silicon only: a native arm64 slice with no Rosetta translation and no
+    # dead x86_64 weight in the binary. Change to $(ARCHS_STANDARD) for a universal build.
+    ARCHS: arm64
+    CLANG_ENABLE_OBJC_WEAK: YES
+    COPY_PHASE_STRIP: NO
+    CURRENT_PROJECT_VERSION: 1
+    DEAD_CODE_STRIPPING: YES
+    ENABLE_HARDENED_RUNTIME: YES
+    # SwiftLint runs as a build phase and needs to read the source tree.
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+    GCC_NO_COMMON_BLOCKS: YES
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    MARKETING_VERSION: "1.0.0"
+    SDKROOT: macosx
+    # Swift 6 language mode with full data-race checking.
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    # Ad-hoc signing so the project builds and runs on a clean checkout with no
+    # developer account. Set your own team to notarise or to ship.
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+  configs:
+    Debug:
+      ENABLE_TESTABILITY: YES
+      GCC_OPTIMIZATION_LEVEL: "0"
+      ONLY_ACTIVE_ARCH: YES
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+      SWIFT_OPTIMIZATION_LEVEL: "-Onone"
+    Release:
+      ENABLE_TESTABILITY: NO
+      GCC_OPTIMIZATION_LEVEL: s
+      SWIFT_COMPILATION_MODE: wholemodule
+      SWIFT_OPTIMIZATION_LEVEL: "-O"
+      VALIDATE_PRODUCT: YES
+    Production:
+      ENABLE_TESTABILITY: NO
+      GCC_OPTIMIZATION_LEVEL: s
+      SWIFT_COMPILATION_MODE: wholemodule
+      VALIDATE_PRODUCT: YES
+      # Optimise for size. The whole app's per-frame work is a rope solver that
+      # measures 0.02 ms a frame; there is no hot loop here that would rather have
+      # the code inlined than the download be smaller.
+      SWIFT_OPTIMIZATION_LEVEL: "-Osize"
+      LLVM_LTO: YES_THIN
+      ASSETCATALOG_COMPILER_OPTIMIZATION: space
+      # Compiles out the development overlay, diagnostic logging, the artwork
+      # override and every other path that exists only for development.
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: HANGLY_PRODUCTION
+      # Previews generate registration code and metadata into every file that has
+      # one. A shipped binary has no use for it.
+      ENABLE_PREVIEWS: NO
+      # Strip the shipped binary, but emit a dSYM first so a crash report from a
+      # user can still be symbolicated.
+      DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+      DEPLOYMENT_POSTPROCESSING: YES
+      STRIP_INSTALLED_PRODUCT: YES
+      STRIP_STYLE: all
+      STRIP_SWIFT_SYMBOLS: YES
+      ONLY_ACTIVE_ARCH: NO
+
+targets:
+  Hangly:
+    type: application
+    platform: macOS
+    sources:
+      - path: Hangly
+        excludes:
+          - "App/Info.plist"
+          - "App/Hangly.entitlements"
+      # Referenced for navigator visibility, but not copied into Resources.
+      - path: Hangly/App/Info.plist
+        buildPhase: none
+      - path: Hangly/App/Hangly.entitlements
+        buildPhase: none
+    settings:
+      base:
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        CODE_SIGN_ENTITLEMENTS: Hangly/App/Hangly.entitlements
+        COMBINE_HIDPI_IMAGES: YES
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: Hangly/App/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.hangly.Hangly
+        PRODUCT_NAME: Hangly
+        SWIFT_EMIT_LOC_STRINGS: YES
+      configs:
+        Debug:
+          ENABLE_PREVIEWS: YES
+    postCompileScripts:
+      - name: SwiftLint
+        basedOnDependencyAnalysis: false
+        script: |
+          if [ "${CONFIGURATION}" = "Production" ]; then
+            echo "note: SwiftLint skipped for the Production configuration."
+            exit 0
+          fi
+          # $PATH without braces: XcodeGen substitutes ${VAR} at generation time,
+          # which would bake this machine's whole PATH into project.pbxproj.
+          export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+          if command -v swiftlint >/dev/null 2>&1; then
+            swiftlint --config "${SRCROOT}/.swiftlint.yml"
+          else
+            echo "warning: SwiftLint not installed. Install it with: brew install swiftlint"
+          fi
+
+  HanglyTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: Tests
+    dependencies:
+      - target: Hangly
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.hangly.HanglyTests
+
+schemes:
+  Hangly:
+    build:
+      targets:
+        Hangly: all
+        HanglyTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: true
+      targets:
+        - HanglyTests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Production
